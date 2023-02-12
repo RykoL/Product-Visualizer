@@ -1,9 +1,13 @@
-export class Asset {
+export enum AssetType {
+  GLTF = "GLTF",
+  HDRI = "HDRI",
+}
 
+export class Asset {
   constructor(
+    public id: string,
     public name: string,
-    public path: string
+    public path: string,
+    public assetType: AssetType
   ) {}
 }
-export class Geometry extends Asset {}
-export class Material extends Asset {}

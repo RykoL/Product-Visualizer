@@ -1,0 +1,21 @@
+* Domain
+
+Document describes the domain used in this project.
+
+Asset -> Asset.load() -> Renderer adds to Scene -> becomes a SceneItem
+
+#+begin_src plantuml :file domain.png
+
+class Vector3 {}
+
+class Matrix{}
+
+class Asset {
+        string name
+        string path
+}
+
+#+end_src
+
+#+RESULTS:
+[[file:domain.png]]

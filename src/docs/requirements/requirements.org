@@ -1,0 +1,14 @@
+#+title: Requirements
+
+* Functional Requirements
+
+
+** Deliverable 1
+
+- A user should be able to load a product into the 3d scene
+- A user should be able to remove a product from the scene
+- A user should be able to rotate the camera to view the product from different perspectives
+- The background should be a HDRI backplate with sibl lighting
+- There should always be a ground plane to catch any shadow cast by the product
+
+** Deliverable 2
