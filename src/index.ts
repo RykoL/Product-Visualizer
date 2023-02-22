@@ -6,13 +6,16 @@ import { ProductMessageReceiver } from "./scene/application/ProductMessageReceiv
 import { EnvironmentService } from "./scene/domain/service/EnvironmentService.js";
 import { SceneService } from "./scene/domain/service/SceneService.js";
 import { Renderer } from "./scene/repository/Renderer.js";
+import { EnvironmentMessageReceiver } from "./scene/application/EnvironmentMessageReceiver";
 
 export class Application {
+
   private renderer: Renderer;
+  private environmentMessageReceiver: EnvironmentMessageReceiver;
   private productMessageReceiver: ProductMessageReceiver;
   private environmentService: EnvironmentService;
 
-  constructor() {
+  constructor(domElement?: HTMLElement) {
     const dimension = {
       width: window.innerWidth,
       height: window.innerHeight,
@@ -34,9 +37,13 @@ export class Application {
       this.renderer,
       assetLoader
     );
+    this.environmentMessageReceiver = new EnvironmentMessageReceiver(
+      this.environmentService
+    );
     this.productMessageReceiver = new ProductMessageReceiver(sceneService);
 
-    document.body.appendChild(this.renderer.canvas);
+    const root = domElement ?? document.body
+    root.appendChild(this.renderer.canvas);
   }
 
   async run() {

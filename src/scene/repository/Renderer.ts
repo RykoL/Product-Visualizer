@@ -7,6 +7,7 @@ import {
   WebGLRenderer,
   ACESFilmicToneMapping,
   sRGBEncoding,
+  MathUtils,
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { RendererError } from "../domain/RendererError";
@@ -35,14 +36,19 @@ export class Renderer implements RendererPort {
     this.renderer.outputEncoding = sRGBEncoding;
     this.scene = new ThreeScene();
     this.camera = new PerspectiveCamera(
-      75,
+      60,
       this._dimension.width / this._dimension.height,
-      0.1,
+      1,
       1000
     );
-    this.camera.position.set(0, 20, 0);
-    this.camera.lookAt(0, 0, 0);
+    this.camera.position.set(-1, 0.3, 1).multiplyScalar(25);
+
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.maxPolarAngle = MathUtils.degToRad(80);
+    this.controls.maxDistance = 1000;
+    this.controls.minDistance = 30;
+    this.controls.enablePan = false;
+    this.controls.update();
     this.scene.add(new AxesHelper(10));
   }
 
@@ -75,6 +81,10 @@ export class Renderer implements RendererPort {
     this.scene.traverse((obj) => {
       console.log(obj);
     });
+  }
+
+  public getSceneObject(name: string): Object3D {
+    return this.scene.getObjectByName(name);
   }
 
   public applyTransformation(sceneItem: SceneItem) {

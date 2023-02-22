@@ -1,16 +1,23 @@
 import {
   AmbientLight,
-  MathUtils,
   Mesh,
-  MeshBasicMaterial,
   PlaneGeometry,
   EquirectangularReflectionMapping,
+  ShadowMaterial,
 } from "three";
+import { GroundProjectedEnv } from "three/examples/jsm/objects/GroundProjectedEnv";
 import { AssetLoader } from "../../../assets/repository/AssetLoader";
-import { studioEnvironment } from "../../../mocks/assets";
+import {
+  beachEnvironment,
+  studioEnvironment,
+  cozyStudioEnvironment,
+} from "../../../mocks/assets";
 import { RendererPort } from "../ports/outbound/RendererPort";
+import { EnvironmentUseCase } from "../ports/inbound/EnvironmentUseCase";
 
-export class EnvironmentService {
+export class EnvironmentService implements EnvironmentUseCase {
+  private environmentPrefix = "ENV";
+
   constructor(
     protected rendererPort: RendererPort,
     protected assetLoader: AssetLoader
@@ -23,25 +30,84 @@ export class EnvironmentService {
   }
 
   public addGroundPlane() {
-    const plane = new PlaneGeometry();
-    const material = new MeshBasicMaterial({ color: 0xdddddd });
-    const mesh = new Mesh(plane, material);
-    mesh.name = "environmentGroundPlane";
-    mesh.scale.set(100, 100, 100);
-    mesh.translateY(-1);
-    mesh.rotateX(MathUtils.degToRad(-90));
-    this.rendererPort.addObjects(mesh);
+    const geometry = new PlaneGeometry(1, 1);
+    const material = new ShadowMaterial({ opacity: 0.3 });
+    const ground = new Mesh(geometry, material);
+    ground.scale.setScalar(1000);
+    ground.rotation.x = -Math.PI / 2;
+    ground.position.y = -0.001;
+    ground.castShadow = false;
+    ground.receiveShadow = true;
+
+    this.rendererPort.addObjects(ground);
   }
 
   public async loadHDRIBackground() {
-    const hdriTexture = await this.assetLoader.loadAsset(studioEnvironment);
+    const hdriTexture = await this.assetLoader.loadAsset(beachEnvironment);
     hdriTexture.mapping = EquirectangularReflectionMapping;
+
+    const env = new GroundProjectedEnv(hdriTexture, {
+      height: 20,
+      radius: 440,
+    });
+    env.name = `${this.environmentPrefix}`;
+    env.scale.setScalar(800);
+
+    this.rendererPort.addObjects(env);
     this.rendererPort.setEnvironment(hdriTexture);
   }
 
+  public async loadEnvironment(name: string) {
+    let envAsset;
+
+    switch (name) {
+      case "studio":
+        envAsset = studioEnvironment;
+        break;
+      case "beach":
+        envAsset = beachEnvironment;
+        break;
+      case "cozyStudio":
+        envAsset = cozyStudioEnvironment;
+        break;
+      default:
+        envAsset = studioEnvironment;
+    }
+    console.log("FUUUUUCK");
+    console.log(envAsset);
+    const hdriTexture = await this.assetLoader.loadAsset(envAsset);
+    hdriTexture.mapping = EquirectangularReflectionMapping;
+
+    const env = new GroundProjectedEnv(hdriTexture, {
+      height: 325,
+      radius: 40,
+    });
+    env.name = `${this.environmentPrefix}`;
+    env.scale.setScalar(100);
+
+    this.rendererPort.removeObjects(
+      this.rendererPort.getSceneObject(this.environmentPrefix)
+    );
+    this.rendererPort.addObjects(env);
+    this.rendererPort.setEnvironment(hdriTexture);
+  }
+
+  public changeEnvironmentRadius(radius: number) {
+    const env: GroundProjectedEnv = this.rendererPort.getSceneObject(
+      this.environmentPrefix
+    ) as GroundProjectedEnv;
+    env.radius = radius;
+  }
+
+  public changeEnvironmentHeight(height: number) {
+    const env: GroundProjectedEnv = this.rendererPort.getSceneObject(
+      this.environmentPrefix
+    ) as GroundProjectedEnv;
+    env.height = height;
+  }
+
   public async initialize() {
-    //this.addGroundPlane();
-    //this.addDefaultLight();
+    this.addGroundPlane();
     this.loadHDRIBackground();
   }
 }

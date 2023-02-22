@@ -5,4 +5,5 @@ export interface RendererPort {
   addObjects(...objects: Object3D[]): void;
   removeObjects(...objcets: Object3D[]): void;
   setEnvironment(texture: Texture): void;
+  getSceneObject(name: string): Object3D;
 }

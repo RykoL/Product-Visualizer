@@ -8,6 +8,20 @@ export const studioEnvironment = new Asset(
   AssetType.HDRI
 );
 
+export const cozyStudioEnvironment = new Asset(
+  "3",
+  "studio",
+  "assets/christmas_photo_studio_06_4k.hdr",
+  AssetType.HDRI
+);
+
+export const beachEnvironment = new Asset(
+  "4",
+  "beach",
+  "assets/blouberg_sunrise_2_4k.hdr",
+  AssetType.HDRI
+);
+
 export const avocadoAsset = new Asset(
   "1",
   "avocado",

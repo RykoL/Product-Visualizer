@@ -1,8 +1,8 @@
 {
-  "name": "threeexperiment",
+  "name": "product-configurator-renderer",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "ThreeJS application that allows for dynamic rendering of products.",
+  "main": "src/index.ts",
   "type": "module",
   "scripts": {
     "dev": "vite dev",
