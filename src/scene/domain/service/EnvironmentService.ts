@@ -101,6 +101,5 @@ export class EnvironmentService implements EnvironmentUseCase {
 
     public async initialize() {
         this.addGroundPlane();
-        await this.loadHDRIBackground();
     }
 }

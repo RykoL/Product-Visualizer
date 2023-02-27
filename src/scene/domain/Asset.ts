@@ -9,6 +9,6 @@ export class SceneAsset {
   id: string;
   name: string;
   path: string;
-  assetType: AssetType;
+  type: AssetType;
   initialTransform: Matrix;
 }

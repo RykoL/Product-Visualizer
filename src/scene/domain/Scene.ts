@@ -1,11 +1,14 @@
 import { SceneAsset } from "./Asset";
 import { SceneItem } from "./SceneItem";
+import {Environment} from "./Environment";
 
 export class Scene {
   private items: SceneItem[];
   private _assets: SceneAsset[];
 
-  constructor() {
+  constructor(
+      public environment: Environment
+  ) {
     this.items = [];
     this._assets = [];
   }

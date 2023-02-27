@@ -1,13 +1,12 @@
 export enum AssetType {
-    GLTF = "GLTF",
-    HDRI = "HDRI",
+    ENVIRONMENT = 'Environment',
 }
 
 export class Asset {
     constructor(
         public id: string,
         public name: string,
-        public path: string,
+        public location: string,
         public type: AssetType
     ) {}
 }

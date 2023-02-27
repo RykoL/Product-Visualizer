@@ -16,7 +16,7 @@ export class AssetRegistry {
         this.loaders = new Map();
     }
 
-    public registerLoader(assetType: AssetType.HDRI | AssetType.GLTF, loader: AssetLoader<SupportedAssets>) {
+    public registerLoader(assetType: AssetType.ENVIRONMENT, loader: AssetLoader<SupportedAssets>) {
         this.loaders.set(assetType, loader);
     }
 
@@ -35,7 +35,7 @@ export class AssetRegistry {
             return this.assets.get(asset.id);
         }
         const loader = this.loaders.get(asset.type);
-        const gltf = await loader.load(asset.path);
+        const gltf = await loader.load(asset.location);
         this.assets.set(asset.id, gltf);
 
         return gltf;
