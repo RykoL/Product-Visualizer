@@ -5,7 +5,7 @@ export enum AssetType {
   HDRI = "HDRI",
 }
 
-export class SceneAsset {
+export interface SceneAsset {
   id: string;
   name: string;
   path: string;
