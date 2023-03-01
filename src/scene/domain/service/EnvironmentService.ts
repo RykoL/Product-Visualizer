@@ -89,6 +89,7 @@ export class EnvironmentService implements EnvironmentUseCase {
         const env: GroundProjectedEnv = this.rendererPort.getSceneObject(
             this.environmentPrefix
         ) as GroundProjectedEnv;
+        env.scale.setScalar(radius)
         env.radius = radius;
     }
 

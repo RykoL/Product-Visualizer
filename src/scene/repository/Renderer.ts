@@ -1,5 +1,4 @@
 import {
-  AxesHelper,
   Object3D,
   PerspectiveCamera,
   Scene as ThreeScene,
@@ -49,7 +48,6 @@ export class Renderer implements RendererPort {
     this.controls.minDistance = 30;
     this.controls.enablePan = false;
     this.controls.update();
-    this.scene.add(new AxesHelper(10));
   }
 
   private renderFrame() {
