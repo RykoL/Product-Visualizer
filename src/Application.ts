@@ -19,10 +19,10 @@ export class Application {
     private assetLoader: AssetRegistry;
     private sceneService: SceneService;
 
-    constructor(domElement?: HTMLElement) {
+    constructor(domElement?: HTMLElement, width?: number, height?: number) {
         const dimension = {
-            width: window.innerWidth,
-            height: window.innerHeight,
+            width: width ?? window.innerWidth,
+            height: height ?? window.innerHeight,
         };
 
         const webglRenderer = new WebGLRenderer();

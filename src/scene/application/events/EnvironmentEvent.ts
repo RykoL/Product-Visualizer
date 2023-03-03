@@ -28,3 +28,12 @@ export const changeEnvironmentRadius = (radius: number) => {
         }
     }))
 }
+
+export const changeEnvironmentHeight = (height: number) => {
+    window.dispatchEvent(new CustomEvent<ChangeEnvironmentHeightEvent>(ENVIRONMENT_EVENT_CHANNEL, {
+        detail: {
+            action: 'CHANGE_ENVIRONMENT_HEIGHT',
+            height: height
+        }
+    }))
+}

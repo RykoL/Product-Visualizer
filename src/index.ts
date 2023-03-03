@@ -1,3 +1,3 @@
 export { Application } from './Application'
 export { Scene } from './scene/domain/Scene'
-export { changeEnvironmentRadius } from './scene/application/events/EnvironmentEvent'
+export { changeEnvironmentRadius, changeEnvironmentHeight } from './scene/application/events/EnvironmentEvent'
